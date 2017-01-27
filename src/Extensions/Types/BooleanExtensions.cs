@@ -1,4 +1,4 @@
-﻿namespace JosephGuadagno.Extensions
+﻿namespace JosephGuadagno.Extensions.Types
 {
     /// <summary>
     /// Extensions for the <see cref="bool"/> object

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace JosephGuadagno.Extensions
+namespace JosephGuadagno.Extensions.Types
 {
     public static class LongExtensions
     {

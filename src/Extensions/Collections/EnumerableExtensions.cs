@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace JosephGuadagno.Extensions
+namespace JosephGuadagno.Extensions.Collections
 {
     /// <summary>
     /// Extensions for the <see cref="Enumerable"/> object.

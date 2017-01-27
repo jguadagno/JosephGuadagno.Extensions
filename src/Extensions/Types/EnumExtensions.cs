@@ -1,8 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 
-namespace JosephGuadagno.Extensions
+namespace JosephGuadagno.Extensions.Types
 {
     /// <summary>
     /// Extensions for the <see cref="Enum"/> object

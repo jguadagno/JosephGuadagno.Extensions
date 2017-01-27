@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using static System.String;
 
-namespace JosephGuadagno.Extensions
+namespace JosephGuadagno.Extensions.Types
 {
     /// <summary>
     /// Extensions for an object
@@ -26,7 +25,7 @@ namespace JosephGuadagno.Extensions
                     if (info.CanWrite && info.PropertyType == typeof(string))
                     {
                         var value = (string) info.GetValue(objectToTrim, null);
-                        if (!IsNullOrEmpty(value))
+                        if (!String.IsNullOrEmpty(value))
                             info.SetValue(objectToTrim, value.Trim(), null);
                     }
                 }

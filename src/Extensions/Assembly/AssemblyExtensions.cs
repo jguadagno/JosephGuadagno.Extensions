@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace JosephGuadagno.Extensions
+namespace JosephGuadagno.Extensions.Assembly
 {
     /// <summary>
     /// Extensions for the <see cref="System.Reflection.Assembly"/>

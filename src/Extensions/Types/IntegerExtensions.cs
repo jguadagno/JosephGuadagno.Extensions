@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace JosephGuadagno.Extensions
+namespace JosephGuadagno.Extensions.Types
 {
     /// <summary>
     /// Extensions for the <see cref="int"/> object.

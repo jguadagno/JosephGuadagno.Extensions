@@ -4,11 +4,8 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.RegularExpressions;
-using static System.Decimal;
-using static System.Double;
-using static System.String;
 
-namespace JosephGuadagno.Extensions
+namespace JosephGuadagno.Extensions.Types
 {
     /// <summary>
     /// String Extensions
@@ -107,7 +104,7 @@ namespace JosephGuadagno.Extensions
         /// <returns></returns>
         public static string ReplaceBreaksWithBR(this string input)
         {
-            return Join("<br/>", input.ToLineArray());
+            return String.Join("<br/>", input.ToLineArray());
         }
 
         /// <summary>
@@ -196,7 +193,7 @@ namespace JosephGuadagno.Extensions
         public static double? ToNullableDouble(this string source)
         {
             double results;
-            if (!TryParse(source, out results))
+            if (!Double.TryParse(source, out results))
             {
                 return null;
             }
@@ -211,7 +208,7 @@ namespace JosephGuadagno.Extensions
         public static decimal? ToNullableDecimal(this string source)
         {
             decimal results;
-            if (!TryParse(source, out results))
+            if (!Decimal.TryParse(source, out results))
             {
                 return null;
             }
@@ -290,7 +287,7 @@ namespace JosephGuadagno.Extensions
 
         public static TEnum GetEnum<TEnum>(this string value, string property = "Name")
         {
-            return IsNullOrWhiteSpace(value)
+            return String.IsNullOrWhiteSpace(value)
                 ? default(TEnum)
                 : Enum.GetValues(typeof(TEnum))
                     .Cast<TEnum>()
