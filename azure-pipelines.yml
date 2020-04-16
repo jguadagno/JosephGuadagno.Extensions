@@ -19,6 +19,6 @@ steps:
 - task: DotNetCoreCLI@2
   displayName: 'Build the Assembly'
   inputs:
-    command: build
-    versioningScheme: byBuildNumber
+    command: 'build'
+    projects: 'src/**/*.csproj'
     arguments: '--configuration $(BuildConfiguration)'
