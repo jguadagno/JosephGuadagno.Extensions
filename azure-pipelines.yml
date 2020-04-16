@@ -31,7 +31,7 @@ steps:
   displayName: 'Build the Assembly'
   inputs:
     command: 'build'
-    projects: './src/*.csproj'
+    projects: 'src/**/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
@@ -43,6 +43,6 @@ steps:
   displayName: Package up the Assembly
   inputs:
     command: 'pack'
-    packagesToPack: './src/*.csproj'
+    packagesToPack: 'src/**/*.csproj'
     nobuild: true
     verbosityPack: 'Normal'
