@@ -18,7 +18,7 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  b uildConfiguration: ${{ parameters.buildConfig }}
+  buildConfiguration: ${{ parameters.buildConfig }}
 
 steps:
 - task: UseDotNet@2
@@ -31,5 +31,18 @@ steps:
   displayName: 'Build the Assembly'
   inputs:
     command: 'build'
-    projects: 'src/**/*.csproj'
+    projects: './src/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Run the Unit Tests'
+  inputs:
+    command: 'test'
+
+- task: DotNetCoreCLI@2
+  displayName: Package up the Assembly
+  inputs:
+    command: 'pack'
+    packagesToPack: './src/*.csproj'
+    nobuild: true
+    verbosityPack: 'Normal'
