@@ -18,7 +18,7 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  buildConfiguration: $(buildConfig)
+  b uildConfiguration: ${{ parameters.buildConfig }}
 
 steps:
 - task: UseDotNet@2
@@ -32,4 +32,4 @@ steps:
   inputs:
     command: 'build'
     projects: 'src/**/*.csproj'
-    arguments: '--configuration $(BuildConfiguration)'
+    arguments: '--configuration $(buildConfiguration)'
