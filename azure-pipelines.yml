@@ -34,10 +34,6 @@ steps:
     projects: 'src/**/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
 
-- task: DotNetCoreCLI@2
-  displayName: 'Run the Unit Tests'
-  inputs:
-    command: 'test'
 
 - task: DotNetCoreCLI@2
   displayName: Package up the Assembly
