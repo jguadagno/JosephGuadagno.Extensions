@@ -44,3 +44,10 @@ steps:
     packagesToPack: 'src/**/*.csproj'
     nobuild: true
     verbosityPack: 'Normal'
+
+- task: DotNetCoreCLI@2
+  displayName: Install NuGetKeyVaultSignTool
+  inputs:
+    command: 'custom'
+    custom: 'tool'
+    arguments: 'install --tool-path . NuGetKeyVaultSignTool'
