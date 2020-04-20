@@ -65,3 +65,11 @@ steps:
       --azure-key-vault-client-id "$(azure-key-vault-client-id)" `
       --azure-key-vault-client-secret "$(azure-key-vault-client-secret)" `
       --azure-key-vault-certificate "JosephGuadagno-2020"
+
+- task: DotNetCoreCLI@2
+  displayName: 'Publish the NuGet Package'
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+    nuGetFeedType: 'internal'
+    publishVstsFeed: 'd868c4ab-2932-424d-8d14-96e3307149bb/a9451576-53d8-4531-a39f-82803d74a7d5'
