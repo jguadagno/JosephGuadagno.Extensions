@@ -51,3 +51,17 @@ steps:
     command: 'custom'
     custom: 'tool'
     arguments: 'install --tool-path . NuGetKeyVaultSignTool'
+
+- task: PowerShell@2
+  displayName: Running NuGetKeyVaultSign
+  inputs:
+    targetType: 'inline'
+    script: |
+      .\NuGetKeyVaultSignTool sign ./src/**/*.nupkg `
+      --file-digest "sha256" `
+      --timestamp-rfc3161 "http://timestamp.digicert.com" `
+      --timestamp-digest "sha256" `
+      --azure-key-vault-url "https://personalsecrets.vault.azure.net" `
+      --azure-key-vault-client-id "$(azure-key-vault-client-id)" `
+      --azure-key-vault-client-secret "$(azure-key-vault-client-secret)" `
+      --azure-key-vault-certificate "JosephGuadagno-2020"
