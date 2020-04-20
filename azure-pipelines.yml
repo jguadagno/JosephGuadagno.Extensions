@@ -18,7 +18,9 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  buildConfiguration: ${{ parameters.buildConfig }}
+- name: buildConfiguration
+  value: ${{ parameters.buildConfig }}
+- group: CodeSigning
 
 steps:
 - task: UseDotNet@2
