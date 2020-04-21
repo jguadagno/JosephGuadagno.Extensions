@@ -40,5 +40,11 @@ namespace JosephGuadagno.Extensions.Tests.Extensions.Types
             // Assert
             Assert.False(results);
         }
+
+        [Fact]
+        public void ShouldFail()
+        {
+            Assert.True(false);
+        }
     }
 }
