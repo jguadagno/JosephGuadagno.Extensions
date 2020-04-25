@@ -1,7 +1,4 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# Generic script to build, test, sign, and deploy NuGet packages
 
 parameters:
   - name: buildConfig
@@ -24,30 +21,29 @@ variables:
 
 steps:
 - task: UseDotNet@2
+  displayName: Setup .NET SDK Version 3.x
   inputs:
-    packageType: 'sdk'
-    version: '3.x'
+    packageType: sdk
+    version: 3.x
     includePreviewVersions: true
 
 - task: DotNetCoreCLI@2
   displayName: 'Build the Assembly'
   inputs:
-    command: 'build'
-    projects: 'src/**/*.csproj'
-    arguments: '--configuration $(buildConfiguration)'
+    command: build
+    versioningScheme: byBuildNumber
+    arguments: '--configuration $(BuildConfiguration)'
 
 - task: DotNetCoreCLI@2
-  displayName: 'Running Unit Tests'
+  displayName: 'Run the Unit Tests'
   inputs:
     command: 'test'
-    projects: 'tests/**/*.csproj'
-    testRunTitle: 'Execute Unit Tests'
 
 - task: DotNetCoreCLI@2
   displayName: Package up the Assembly
   inputs:
     command: 'pack'
-    packagesToPack: 'src/**/*.csproj'
+    packagesToPack: './src/*.csproj'
     nobuild: true
     verbosityPack: 'Normal'
 
@@ -56,7 +52,7 @@ steps:
   inputs:
     command: 'custom'
     custom: 'tool'
-    arguments: 'install --tool-path . NuGetKeyVaultSignTool'
+    arguments: 'install --tool-path . NuGetKeyVaultSignTool --version 2.0.2'
 
 - task: PowerShell@2
   displayName: Running NuGetKeyVaultSign
@@ -67,15 +63,15 @@ steps:
       --file-digest "sha256" `
       --timestamp-rfc3161 "http://timestamp.digicert.com" `
       --timestamp-digest "sha256" `
-      --azure-key-vault-url "https://personalsecrets.vault.azure.net" `
+      --azure-key-vault-url "https://personalsecrets.vault.azure.net/" `
       --azure-key-vault-client-id "$(azure-key-vault-client-id)" `
       --azure-key-vault-client-secret "$(azure-key-vault-client-secret)" `
       --azure-key-vault-certificate "JosephGuadagno-2020"
 
-- task: DotNetCoreCLI@2
-  displayName: 'Publish the NuGet Package'
+- task: NuGetCommand@2
+  displayName: Publishing package(s) to NuGet
   inputs:
     command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
-    nuGetFeedType: 'internal'
-    publishVstsFeed: 'd868c4ab-2932-424d-8d14-96e3307149bb/a9451576-53d8-4531-a39f-82803d74a7d5'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    nuGetFeedType: 'external'
+    publishFeedCredentials: 'Public-NuGet'
