@@ -9,7 +9,7 @@ parameters:
     - Release
 
 trigger:
-- master
+- main
 
 pool:
   vmImage: 'windows-latest'
@@ -18,35 +18,42 @@ variables:
 - name: buildConfiguration
   value: ${{ parameters.buildConfig }}
 - group: CodeSigning
+- group: Personal-Key-Vault
+#- name: System.Debug
+#  value: true
 
 steps:
+
 - task: UseDotNet@2
-  displayName: Setup .NET SDK Version 3.x
+  displayName: Setup .NET SDK Version 5.x
   inputs:
     packageType: sdk
-    version: 3.x
+    version: 5.x
     includePreviewVersions: true
 
 - task: DotNetCoreCLI@2
   displayName: 'Build the Assembly'
   inputs:
-    command: build
-    projects: 'src/**/*.csproj'
-    versioningScheme: byBuildNumber
+    command: 'build'
+    projects: '**/*.csproj'
     arguments: '--configuration $(BuildConfiguration)'
 
-- task: DotNetCoreCLI@2
-  displayName: 'Run the Unit Tests'
-  inputs:
-    projects: 'tests/**/*.csproj'
-    command: 'test'
+## Skipping the Unit Tests because they require the Azure Storage Emulator
+#- task: DotNetCoreCLI@2
+#  displayName: 'Run the Unit Tests'
+#  inputs:
+#    command: 'test'
+#    projects: '**/*.Tests.csproj'
 
+# Note: Pack command with out the output set puts the .nupkg in the WorkingDirectory
 - task: DotNetCoreCLI@2
   displayName: Package up the Assembly
   inputs:
     command: 'pack'
-    packagesToPack: 'src/*.csproj'
+    packagesToPack: './src/*.csproj'
+    packDirectory: '$(Build.ArtifactStagingDirectory)/output'
     nobuild: true
+    versioningScheme: 'off'
     verbosityPack: 'Normal'
 
 - task: DotNetCoreCLI@2
@@ -54,26 +61,19 @@ steps:
   inputs:
     command: 'custom'
     custom: 'tool'
-    arguments: 'install --tool-path . NuGetKeyVaultSignTool --version 2.0.2'
+    arguments: 'install --tool-path . NuGetKeyVaultSignTool'
 
 - task: PowerShell@2
   displayName: Running NuGetKeyVaultSign
   inputs:
-    targetType: 'inline'
-    script: |
-      .\NuGetKeyVaultSignTool sign ./src/**/*.nupkg `
-      --file-digest "sha256" `
-      --timestamp-rfc3161 "http://timestamp.digicert.com" `
-      --timestamp-digest "sha256" `
-      --azure-key-vault-url "https://personalsecrets.vault.azure.net/" `
-      --azure-key-vault-client-id "$(azure-key-vault-client-id)" `
-      --azure-key-vault-client-secret "$(azure-key-vault-client-secret)" `
-      --azure-key-vault-certificate "JosephGuadagno-2020"
+    filePath: './NuGetKeyVaultSign.ps1'
+    arguments: '-FilePath "$(Build.ArtifactStagingDirectory)/output/*.nupkg" -AzureKeyVaultUrl $(azure-key-vault-url) -AzureKeyVaultTenantId $(azure-key-vault-tenant-id) -AzureKeyVaultClientId $(azure-key-vault-client-id) -AzureKeyVaultClientSecret $(azure-key-vault-client-secret) -AzureKeyVaultCertificate "JosephGuadagno-2021"'
+    pwsh: true
 
 - task: NuGetCommand@2
   displayName: Publishing package(s) to NuGet
   inputs:
     command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/output/*.nupkg'
     nuGetFeedType: 'external'
     publishFeedCredentials: 'Public-NuGet'
