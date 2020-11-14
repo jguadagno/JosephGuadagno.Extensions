@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JosephGuadagno.Extensions", "src\JosephGuadagno.Extensions.csproj", "{A9457507-13C8-414F-91D7-23F75F019A63}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JosephGuadagno.Extensions.Tests", "tests\JosephGuadagno.Extensions.Tests.csproj", "{80E72FDF-F931-4263-87BF-D3F0B1D846BD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExtraStuff", "ExtraStuff", "{34E9A184-2C0C-4C9B-B990-6E9D4391F055}"
+ProjectSection(SolutionItems) = preProject
+	.gitignore = .gitignore
+	azure-pipelines.yml = azure-pipelines.yml
+	NuGetKeyVaultSign.ps1 = NuGetKeyVaultSign.ps1
+	README.md = README.md
+EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A9457507-13C8-414F-91D7-23F75F019A63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9457507-13C8-414F-91D7-23F75F019A63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9457507-13C8-414F-91D7-23F75F019A63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9457507-13C8-414F-91D7-23F75F019A63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80E72FDF-F931-4263-87BF-D3F0B1D846BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80E72FDF-F931-4263-87BF-D3F0B1D846BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80E72FDF-F931-4263-87BF-D3F0B1D846BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80E72FDF-F931-4263-87BF-D3F0B1D846BD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

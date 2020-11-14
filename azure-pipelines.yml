@@ -38,14 +38,13 @@ steps:
     projects: '**/*.csproj'
     arguments: '--configuration $(BuildConfiguration)'
 
-## Skipping the Unit Tests because they require the Azure Storage Emulator
-#- task: DotNetCoreCLI@2
-#  displayName: 'Run the Unit Tests'
-#  inputs:
-#    command: 'test'
-#    projects: '**/*.Tests.csproj'
+- task: DotNetCoreCLI@2
+  displayName: 'Run the Unit Tests'
+  inputs:
+    command: 'test'
+    projects: '**/*.Tests.csproj'
 
-# Note: Pack command with out the output set puts the .nupkg in the WorkingDirectory
+# Note: Running the 'Pack' command without the output set puts the .nupkg in the WorkingDirectory
 - task: DotNetCoreCLI@2
   displayName: Package up the Assembly
   inputs:
