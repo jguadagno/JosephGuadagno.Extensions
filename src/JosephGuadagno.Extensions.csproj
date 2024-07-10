@@ -5,15 +5,15 @@
     <Authors>Joseph Guadagno</Authors>
     <Product>JosephGuadagno.Extensions</Product>
     <Description>Extension methods written to ease development.</Description>
-    <Copyright>Copyright ©2014-2022, Joseph Guadagno, JosephGuadagno.Net, LLC; josephguadagno.net</Copyright>
-    <TargetFrameworks>net462;net47;net471;net472;net48;netstandard2.1;net5.0;net6.0</TargetFrameworks>
+    <Copyright>Copyright ©2014-2024, Joseph Guadagno, JosephGuadagno.Net, LLC; josephguadagno.net</Copyright>
+    <TargetFrameworks>net462;net47;net471;net472;net48;netstandard2.1;net5.0;net6.0;net7.0;net8.0</TargetFrameworks>
     <LangVersion>9</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup>
     <VersionMajor>1</VersionMajor>
     <VersionMinor>2</VersionMinor>
-    <VersionBuild>3</VersionBuild>
+    <VersionBuild>4</VersionBuild>
   </PropertyGroup>
 
   <PropertyGroup>
